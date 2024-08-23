@@ -21,6 +21,9 @@ class TaskList
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'taskList', orphanRemoval: true)]
     private Collection $tasks;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -57,6 +60,18 @@ class TaskList
                 $task->setTaskList(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }
