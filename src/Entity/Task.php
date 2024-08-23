@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TaskRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 #[ApiResource]
@@ -16,6 +17,7 @@ class Task
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups('taskList')]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
