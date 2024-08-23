@@ -6,10 +6,12 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\TaskListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TaskListRepository::class)]
-#[ApiResource]
+#[ApiResource(normalizationContext: ['groups' => ['taskList']])]
 class TaskList
 {
     #[ORM\Id]
@@ -21,9 +23,11 @@ class TaskList
      * @var Collection<int, Task>
      */
     #[ORM\OneToMany(targetEntity: Task::class, mappedBy: 'taskList', orphanRemoval: true)]
+    #[Groups('taskList')]
     private Collection $tasks;
 
     #[ORM\Column(length: 255)]
+    #[Groups('taskList')]
     private ?string $name = null;
 
     public function __construct()
